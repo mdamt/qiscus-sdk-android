@@ -121,11 +121,11 @@ You will get the response as follow:
          {
             "avatar_url":"https:\/\/d1edrlpyc25xu0.cloudfront.net\/kiwari-prod\/image\/upload\/75r6s_jOHa\/1507541871-avatar-mine.png",
             "created_at":"2017-12-05T08:07:58.405896Z",
-            "email":"tesweqeq",
+            "email":"sample@email.com",
             "id":452773,
-            "name":"tesweqeq",
+            "name":"sample",
             "updated_at":"2017-12-05T08:07:58.405896Z",
-            "username":"tesweqeq"
+            "username":"sample"
          }
       ]
    },
