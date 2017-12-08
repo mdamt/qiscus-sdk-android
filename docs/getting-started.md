@@ -33,11 +33,11 @@ You can find your APP ID on your Qiscus app dashboard. Here you can see the pict
 To authenticate to SDK server, app needs to have user credential locally stored for further requests. The credential consists of a token that will identify a user in SDK server.
 When you want to disconnect from SDK server, terminating authentication will be done by clearing the stored credential.
 Qiscus SDK authentication can be done separately with your main app authentication, especially if your main app has functionality before the messaging features. 
-There are 2 type of authentication that you can opt to use: Basic Authentication and Authentication using JWT.
-Here somet comparison to help you decide between the two options:
+There are 2 type of authentication that you can opt to use: Basic Authentication and Server Authentication.
+Here some comparison to help you decide between the two options:
 
-* Basic Authentication can be done simply by providing userID and userKey through your client app. On the other hand, JWT authentication, the credential information is provided by your Server App. In this case, you need o prepare your own Backend. 
-* The Basic Authentication is easier to implement but JWT Authentication is more secure.
+* Basic Authentication can be done simply by providing userID and userKey through your client app. On the other hand, Server Authentication, the credential information is provided by your Server App. In this case, you need o prepare your own Backend. 
+* The Basic Authentication is easier to implement but Server Authentication is more secure.
 
 ### Configuration
 
@@ -87,82 +87,6 @@ You can learn from the figure below to understand what really happened when call
 
 <p align="center"><br/><img src="https://raw.githubusercontent.com/qiscus/qiscus-sdk-android/develop/screenshot/set_user.png" width="80%" /><br/></p>
 
-### JWT Authentication
-
-Another option is to authenticate using Json Web Token (JWT) (read [here ](https://jwt.io/)for more detail about JWT). Json web token contains your app account details which typically consists of a single string which contains information of two parts, Jose header and JWT claims set. 
-
-The steps to authenticate with JWT goes like this:
-
-1. The Client App request a nonce from Qiscus SDK server
-2. Qiscus SDK Server will send Nonce to client app
-3. Client App send user credentials and Nonce that is obtained from Qiscus SDK Server to Client app backend
-4. The Client App backend will send the token to client app
-5. The Client App send that token to Qiscus Chat SDK
-6. Qiscus Chat SDK send Qiscus Account to Client app
-
-<p align="center"><br/><img src="https://raw.githubusercontent.com/qiscus/qiscus-sdk-android/develop/screenshot/jwt.png" width="80%" /><br/></p>
-
-You need to request Nonce from Qiscus Chat SDK Server. Nonce (Number Used Once) is a unique, randomly generated string used to identify a single request. Please be noted that a Nonce will expire in 10 minutes. So you need to implement your code to request JWT from your backend right after you got the returned Nonce. Here is how to authenticate to Qiscus Chat SDK using JWT :
-
-```java
-QiscusRxExecutor.execute(QiscusApi.getInstance().requestNonce(), new QiscusRxExecutor.Listener<QiscusNonce>() {
-        @Override
-        public void onSuccess(QiscusNonce qiscusNonce) {
-            //do request jwt from your backend using returned Nonce
-        }
-
-        @Override
-        public void onError(Throwable throwable) {
-            //do anything if error occurred 
-        }
-    });
-```
-
-The code above is a sample of method you can implement in your app. By calling `QiscusRxExecutor.execute(QiscusApi.getInstance().requestNonce()` , you will request Nonce from Qiscus SDK server and a Nonce will be returned. If it is success, you can request JWT from your backend by sending Nonce you got from Qiscus SDK Server. 
-When you got the JWT Token, you can pass that JWTto` Qiscus.setUser()` method to allow Qiscus to authenticate your user and return user account, as shown in the code below :
-
-```java
-Qiscus.setUser('your jwt token', new Qiscus.SetUserListener() {
-        @Override
-        public void onSuccess(QiscusAccount qiscusAccount) {
-            //do anything if success
-        }
-
-        @Override
-        public void onError(Throwable throwable) {
-            //do anything if error occurs
-        }
-    });
-```
-
-### Setting jose header and jwt claim set in your backend
-
-When your backend returns a JWT after receiving Nonce from your client app, the JWT will be caught by client app and will be forwarded to Qiscus Chat SDK Server. In this phase, Qiscus Chat SDK Server will verify the JWT before returning Qiscus Account for your user. To allow Qiscus Chat SDK Server successfully recognize the JWT, you need to setup Jose Header and JWT claim set in your backend as follow :
-
-**Jose Header :**
-
-```
-{
-  "alg": "HS256",  // must be HMAC algorithm
-  "typ": "JWT", // must be JWT
-  "ver": "v2" // must be v2
-}
-```
-
-**JWT Claim Set :**
-
-```
-{
-  "iss": "QISCUS SDK APP ID", // your qiscus app id, can obtained from dashboard
-  "iat": 1502985644, // current timestamp in unix
-  "exp": 1502985704, // An arbitrary time in the future when this token should expire. In epoch/unix time. We encourage you to limit 2 minutes
-  "nbf": 1502985644, // current timestamp in unix
-  "nce": "nonce", // nonce string as mentioned above
-  "prn": "YOUR APP USER ID", // your user identity such as email or id, should be unique and stable
-  "name": "displayname", // optional, string for user display name
-  "avatar_url": "" // optional, string url of user avatar
-}
-```
 
 ### Updating User Profile
 
