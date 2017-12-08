@@ -33,15 +33,15 @@ You can find your APP ID on your Qiscus app dashboard. Here you can see the pict
 To authenticate to SDK server, app needs to have user credential locally stored for further requests. The credential consists of a token that will identify a user in SDK server.
 When you want to disconnect from SDK server, terminating authentication will be done by clearing the stored credential.
 Qiscus SDK authentication can be done separately with your main app authentication, especially if your main app has functionality before the messaging features. 
-There are 2 type of authentication that you can opt to use: Basic Authentication and Server Authentication.
+There are 2 type of authentication that you can opt to use: Client Authentication and Server Authentication.
 Here some comparison to help you decide between the two options:
 
-* Basic Authentication can be done simply by providing userID and userKey through your client app. On the other hand, Server Authentication, the credential information is provided by your Server App. In this case, you need o prepare your own Backend. 
-* The Basic Authentication is easier to implement but Server Authentication is more secure.
+* Client Authentication can be done simply by providing userID and userKey through your client app. On the other hand, Server Authentication, the credential information is provided by your Server App. In this case, you need o prepare your own Backend. 
+* The Client Authentication is easier to implement but Server Authentication is more secure.
 
 ### Configuration
 
-After successfully installing Qiscus SDK, you need to first initiate your app id for your chat app before accry out to User Authentication. This initialization only need to be done once in the app lifecycle.
+After successfully installing Qiscus SDK, you need to first initiate your app id for your chat app before carry out to Authentication. This initialization only need to be done once in the app lifecycle.
 
 Qiscus.init(context, APP_ID);
 
@@ -57,7 +57,7 @@ public class SampleApp extends Application {
 }
 ```
 
-### Basic Authentication
+### Client Authentication
 
 This authentication is done by calling `Qiscus.setUser()` function. This function will retrieve or create user credential based on the unique UserId. Here is example:
 
