@@ -43,8 +43,6 @@ Here some comparison to help you decide between the two options:
 
 After successfully installing Qiscus SDK, you need to first initiate your app id for your chat app before carry out to Authentication. This initialization only need to be done once in the app lifecycle.
 
-Qiscus.init(context, APP_ID);
-
 Initialization can be implemented in the initial startup. Here is how you can do that:
 
 ```java
