@@ -49,7 +49,7 @@ To meet your expectations, we suggest you try out our sample app. The sample app
 
 If you simply want to try the android sample app, you can direct to our [github repository](https://github.com/qiscus/qiscus-sdk-android-sample-v2) to clone our sample app. You can explore features of Qiscus Chat SDK.
 
-If you want your sample app running with your own APP ID, you can change it
+If you want your sample app running with your own APP ID, you can change it inside SampleApp.java.
 
 ```java
 public class SampleApp extends Application {
