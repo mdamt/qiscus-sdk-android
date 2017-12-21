@@ -49,17 +49,8 @@ To meet your expectations, we suggest you try out our sample app. The sample app
 
 If you simply want to try the android sample app, you can direct to our [github repository](https://github.com/qiscus/qiscus-sdk-android-sample-v2) to clone our sample app. You can explore features of Qiscus Chat SDK.
 
-If you want your sample app running with your own APP ID, you can change it inside SampleApp.java.
-
-```java
-public class SampleApp extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Qiscus.init(this,"your APP ID");
-    }
-}
-```
+If you want your sample app running with your own APP ID, you can change it inside Configuration.java.
+Please be noted that when you connect your app with your APP ID, you may not see your contact list in your app *before* changing Sample Dashboard URL to your own URL.
 
 ### Try Sample App With Sample Dashboard
 
